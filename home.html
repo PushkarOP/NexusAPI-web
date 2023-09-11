@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Nexus API</title>  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div id="backdrop" style="{{ 'display: none;' if hide_loader else '' }}"></div>
+<div id="loader" style="{{ 'display: none;' if hide_loader else '' }}"><span class="loader"></span></div>
+<div class="container">
+    <a href="https://nexus.pushkarop.repl.co/">
+    <h1 class="container-title">NEXUS API</h1>
+    </a>
+    <form method="POST">
+    <div class="form-group">
+    <input placeholder="API KEY" type="text" id="api_key" name="api_key" required />
+    <input placeholder="Question" type="text" id="question" name="question" required />
+    <label class="styled-label" for="model"><b>Model:</b></label>
+    <select class="styled-select" id="model" name="model" required onchange="handleModelChange(this.value)">
+        <option value="gpt-4">GPT-4</option>
+        <option value="amazon">Amazon Post</option>
+        <option value="blog">Blog Post</option>
+        <option value="youtube">YouTube Post</option>
+        <option value="chat">Chat Bot</option>
+        <option value="image">Image</option>
+        <option value="bardai">BardAI Google</option>
+    </select>
+    <div id="productContainer">
+        <label class="styled-label" for="product"><b>Product (only for Amazon Post model): <span id="productValue">5</span></b></label>
+        <input class="styled-range" type="range" id="product" name="product" min="1" max="10" oninput="updateProductValue(this.value)">
+    </div>
+    <div id="internetContainer">
+        <label class="styled-label" for="internet"><b>Internet (only for Chat Bot model):</b></label>
+        <select class="styled-select" id="internet" name="internet">
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+    </div>
+    <div class="button-group">
+        <button type="submit">Submit</button>
+        <button type="button" id="copyButton" onclick="copyOutput()">Copy</button>
+    </div>
+  </form>
+</div>
+<div class="container output-container">
+    <div class="output">
+    <h2 class="output-title">Output:</h2>
+    <pre id="response">{{ response | safe }}</pre>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
